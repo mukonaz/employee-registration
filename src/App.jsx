@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
+import { v4 as uuidv4 } from 'uuid'; // Import UUID for unique ID generation
 
 const API_URL = 'http://localhost:5000/employees';
 
@@ -12,8 +13,7 @@ function App() {
     email: '',
     phone: '',
     image: '',
-    position: '',
-    id: ''
+    position: ''
   });
   const [isEditing, setIsEditing] = useState(false);
   const [currentEmployeeId, setCurrentEmployeeId] = useState(null);
@@ -66,7 +66,7 @@ function App() {
     if (isEditing) {
       try {
         await axios.put(`${API_URL}/${currentEmployeeId}`, formData);
-        setEmployees(employees.map(emp => emp.id === currentEmployeeId ? formData : emp));
+        setEmployees(employees.map(emp => emp.id === currentEmployeeId ? { ...formData, id: currentEmployeeId } : emp));
         setIsEditing(false);
         setCurrentEmployeeId(null);
         console.log('Updated employee:', formData); // Debug log
@@ -75,13 +75,15 @@ function App() {
       }
     } else {
       try {
-        const response = await axios.post(API_URL, formData);
+        const newEmployee = { ...formData, id: uuidv4() };
+        const response = await axios.post(API_URL, newEmployee);
         setEmployees([...employees, response.data]);
         console.log('Added employee:', response.data); // Debug log
       } catch (error) {
         console.error('Error adding employee:', error);
       }
     }
+
     setFormData({
       name: '',
       email: '',
@@ -99,8 +101,7 @@ function App() {
   const handleDelete = async (id) => {
     try {
       await axios.delete(`${API_URL}/${id}`);
-      const updatedEmployees = employees.filter(employee => employee.id !== id);
-      setEmployees(updatedEmployees);
+      setEmployees(employees.filter(employee => employee.id !== id));
       console.log('Deleted employee with ID:', id); // Debug log
     } catch (error) {
       console.error('Error deleting employee:', error);
@@ -116,7 +117,8 @@ function App() {
   };
 
   const filteredEmployees = employees.filter(employee =>
-    employee.id.includes(searchQuery)
+    employee.id.includes(searchQuery) || 
+    employee.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -124,6 +126,7 @@ function App() {
       <h2>Employee Registration App</h2>
       <form onSubmit={handleSubmit}>
         <div className='labels'>
+          {/* Form inputs */}
           <label htmlFor="name">Name</label><br />
           <input type="text" id='name' placeholder='Name' value={formData.name} onChange={handleInputChange} required /><br />
 
@@ -148,34 +151,31 @@ function App() {
       </form>
 
       <div className='search'>
-        <h3>Search Employees by ID</h3>
-        <input type="text" placeholder="Search by ID" value={searchQuery} onChange={handleSearch} />
+        <h3>Search Employees</h3>
+        <input type="text" placeholder="Search by ID or Name" value={searchQuery} onChange={handleSearch} />
       </div>
 
       <div className='employee-list'>
-        <h3>Employee List</h3>
-        {filteredEmployees.length > 0 ? (
-          <ul>
-            {filteredEmployees.map((employee, index) => (
-              <li key={index}>
-                <p>Name: {employee.name}</p>
-                <p>Email: {employee.email}</p>
-                <p>Phone: {employee.phone}</p>
-                <p>Position: {employee.position}</p>
-                <p>ID: {employee.id}</p>
-                {employee.image && <img src={employee.image} alt={`${employee.name}'s avatar`} width="100" />}
-                <button onClick={() => handleEdit(employee.id)}>Edit</button>
-                <button onClick={() => handleDelete(employee.id)}>Delete</button>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No employees found</p>
-        )}
-      </div>
+  <h3>Employee List</h3>
+  {filteredEmployees.length > 0 ? (
+    <ul>
+      {filteredEmployees.map((employee, index) => (
+        <li key={index}>
+          <p>Name: {employee.name}</p>     
+          <div className="buttons">
+            <button onClick={() => handleEdit(employee.id)}>Edit {employee.name}</button>
+            <button onClick={() => handleDelete(employee.id)}>Delete {employee.name}</button>
+          </div>
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <p>No employees found</p>
+  )}
+</div>
+
     </div>
   );
 }
 
 export default App;
-
