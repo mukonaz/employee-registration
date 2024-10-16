@@ -16,6 +16,8 @@ A few of the things you can do with Employee Registration:
 
 ## Images
 
-![Home Screen]
-![Screenshot 2024-10-16 224617](https://github.com/user-attachments/assets/ddc8d7a9-77cf-43f0-97d4-bc7ff86680f7)
+Home Screen
+
+![Screenshot 2024-10-16 224617](https://github.com/user-attachments/assets/7c4d2175-c129-4dcd-b557-06efb3cbd00a)
+
 
