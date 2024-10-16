@@ -13,9 +13,9 @@ This is a Employee Registration that allows you to store emplyees data into a js
 ## Features
 
 A few of the things you can do with Employee Registration:
-- *you can Add new employee
-- *Can delete or edit Added employees
-- *you can search emplyees in the database 
+- you can Add new employee
+- Can delete or edit Added employees
+- you can search emplyees in the database 
 
 ## Images
 
