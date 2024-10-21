@@ -15,7 +15,7 @@ This is a Employee Registration that allows you to store emplyees data into a js
 ## Employee Registration Application Requirements:
 
 **Search Function: Users can search for employees by ID.**
-- [Add Function: Users can add a new employee with the following details:]
+- **Add Function: Users can add a new employee with the following details:**
 - Name
 - Email Address
 - Phone Number
