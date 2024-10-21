@@ -102,7 +102,7 @@ function App() {
     try {
       await axios.delete(`${API_URL}/${id}`);
       setEmployees(employees.filter(employee => employee.id !== id));
-      console.log('Deleted employee with ID:', id); // Debug log
+      console.log('Deleted employee with ID:', id); 
     } catch (error) {
       console.error('Error deleting employee:', error);
     }
@@ -113,7 +113,7 @@ function App() {
     setFormData(employeeToEdit);
     setIsEditing(true);
     setCurrentEmployeeId(id);
-    console.log('Editing employee:', employeeToEdit); // Debug log
+    console.log('Editing employee:', employeeToEdit); 
   };
 
   const filteredEmployees = employees.filter(employee =>
@@ -126,7 +126,6 @@ function App() {
       <h2>Employee Registration App</h2>
       <form onSubmit={handleSubmit}>
         <div className='labels'>
-          {/* Form inputs */}
           <label htmlFor="name">Name</label><br />
           <input type="text" id='name' placeholder='Name' value={formData.name} onChange={handleInputChange} required /><br />
 
