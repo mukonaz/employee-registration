@@ -41,29 +41,25 @@ To run this project locally, follow these steps:
 
 1. Clone the repository:
    ```bash
-   https://github.com/mukonaz/Todo-list
+   https://github.com/mukonaz/employee-registration
    ```
 2. Install the dependencies:
    ```bash
-   cd react-js---TodoList
    npm install
    ```
 3. Start the React development server:
    ```bash
-   npm start
+   npm run dev
    ```
 4. Open the app in your browser:
    ```
-   http://localhost:3000
+   http://localhost:5173
 
 5. The app server is running on:
    ```
-   http://localhost:3002 
+   http://localhost:5000
 
 6. Go into src/db to run the following:
    ```
    [ json-server --watch db.json --port 5000 ]
 
-7. Domain Name:   
-   ```
-   https://todo-list-sooty-gamma-59.vercel.app/
